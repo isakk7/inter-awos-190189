@@ -2,21 +2,23 @@ const express = require('express')
 const app = express();
 const Usuario = require('../models/usuario');
 const _ = require('../models/usuario');
-
+//const bcrypt = require('bcrypt');
 
 
 app.get('/usuario', function(req, res) {
+    let desde = req.query.desde || 0;
+    let hasta = req.query.hasta || 5;
     
-    Usuario.find({ estado: true})
+    Usuario.find({})
     .skip(Number(desde))
-    .limit(Number(haste))
+    .limit(Number(hasta))
     .exec((err, usuario) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
                 msg: 'Ocurrio un error al momento de consultar',
                 err
-            });
+            })
         }
 
         res.json({
@@ -25,16 +27,17 @@ app.get('/usuario', function(req, res) {
             conteo: usuario.length,
             usuario
     
-        });
+        })
     });
 });
 
-app.post('usuario', function(req, res) {
+app.post('/usuario', function(req, res) {
     let body = req.body;
-    let usr = new usuario({
+    let usr = new Usuario({
+       
         nombre: body.nombre,
-        primer_apellido: body.primer_apellido,
-        segundo_apellido: body.segundo_apellido,
+        primerapellido: body.primerapellido,
+        segundoapellido: body.segundoapellido,
         edad: body.edad,
         curp: body.curp,
         telefono: body.telefono,
@@ -61,7 +64,7 @@ app.post('usuario', function(req, res) {
 
 app.put('/usuario/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'email']);
+    let body = _.pick(req.body, ['nombre', 'apellido', 'email']);
 
     Usuario.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, usrDB) => {

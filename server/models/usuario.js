@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 let Schema = mongoose.Schema;
 
 let usuarioSchema = new Schema({
@@ -7,11 +6,11 @@ let usuarioSchema = new Schema({
         type: String,
         required: [true, 'El nombre es necesario']
     },
-    primer_apellido: {
+    primerapellido: {
         type: String,
         required: [true, 'El primer apellido es necesario']
     },
-    segundo_apellido: {
+    segundoapellido: {
         type: String,
         required: [true, 'El segundo apellido es necesario']
     },
@@ -21,11 +20,13 @@ let usuarioSchema = new Schema({
     },
     curp: {
         type: String,
-        required: [true, 'La curp es necesaria']
+        required: [true, 'La curp es necesaria'],
+        unique: true
     },
     telefono: {
         type: Number,
-        ref: 'Telefono'
+        ref: 'Telefono',
+        unique: true
         
     },
     
