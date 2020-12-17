@@ -3,27 +3,37 @@ const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let departamentoSchema = new Schema({
-    idjefadearea: {
+    idjefedearea: {
         type: String,
-        required: [true, 'El nombre es necesario']
+        required: [true, 'El id es necesario']
     },
     nombre: {
         type: String,
-        required: [true, 'El primer apellido es necesario']
+        required: [true, 'El nombre es necesario']
     },
-    nombreempleados: {
-        type: String,
-        required: [true, 'El segundo apellido es necesario']
+    numeroempleados: {
+        type: Number,
+        required: [true, 'El numero de empleados es necesario']
     },
     extensiontelefonica: {
         type: Number,
-        ref: 'Edad'
+        ref: 'Telefono'
     },
    
     activo: {
         type: Boolean,
         default: true
     },
+    estado: {
+        type:Boolean,
+        default: true
+    },
+    usuario: {
+        type:Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: [true, 'El usuario es obligatorio']
+
+    }
  
 });
 

@@ -32,6 +32,11 @@ let empleadoSchema = new Schema({
         type: Boolean,
         default: true
     },
+
+    estado: {
+        type:Boolean,
+        default: true
+    }
  
 });
 

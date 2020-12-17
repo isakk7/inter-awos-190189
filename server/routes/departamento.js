@@ -1,15 +1,18 @@
 const express = require('express')
 const app = express();
 const Departamento = require('../models/departamento');
-const _ = require('../models/departamento');
+const _ = require('underscore');
 
 
 
 app.get('/departamento', function(req, res) {
-    
-    Departamento.find({ estado: true})
+    let desde = req.query.desde || 0;
+    let hasta = req.query.hasta || 5;
+
+    Departamento.find({})
     .skip(Number(desde))
-    .limit(Number(haste))
+    .limit(Number(hasta))
+    .populate('usuario', 'nombre primerapellido segundoapellido edad curp telefono email ')
     .exec((err, departamento) => {
         if (err) {
             return res.status(400).json({
@@ -21,7 +24,7 @@ app.get('/departamento', function(req, res) {
 
         res.json({
             ok: true,
-            msg: 'Lista de usuarios obtenida con exito',
+            msg: 'Lista de departamentos obtenida con exito',
             conteo: departamento.length,
             departamento
     
@@ -29,12 +32,12 @@ app.get('/departamento', function(req, res) {
     });
 });
 
-app.post('departamento', function(req, res) {
+app.post('/departamento', function(req, res) {
     let body = req.body;
-    let dep = new departamento({
-        idjefadearea: body.idjefadearea,
+    let dep = new Departamento({
+        idjefedearea: body.idjefedearea,
         nombre: body.nombre,
-        nombreempleados: body.nombreempleado,
+        numeroempleados: body.numeroempleados,
         extensiontelefonica: body.extensiontelefonica,
         activo: body.activo
     });
@@ -50,7 +53,7 @@ app.post('departamento', function(req, res) {
 
         res.json({
             ok:true,
-            msg: 'Empleado insertado con exito',
+            msg: 'Departamento insertado con exito',
             depDB
         });
     });
@@ -58,7 +61,7 @@ app.post('departamento', function(req, res) {
 
 app.put('/departamento/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre', 'email']);
+    let body = _.pick(req.body, ['idjefedearea', 'nombre', 'numeroempleados', 'extensiontelefonica']);
 
     Departamento.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, depDB) => {
@@ -72,7 +75,7 @@ app.put('/departamento/:id', function(req, res) {
 
             res.json({
                 ok: true,
-                msg: 'Usuario actualizado con exito',
+                msg: 'Departamento actualizado con exito',
                 departamento: depDB
             });
         });
@@ -86,14 +89,14 @@ app.delete('/departamento/:id', function(req, res) {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Ocurrio un error al momento de eliminar Usuario',
+                msg: 'Ocurrio un error al momento de eliminar el Departamento',
                 err
             });
         }
 
         res.json({
             ok: true,
-            msg: 'Usuario eliminado con exito',
+            msg: 'Departamento eliminado con exito',
             depDB
         });
     });

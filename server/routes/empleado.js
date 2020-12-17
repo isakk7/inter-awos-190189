@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express();
 const Empleado = require('../models/empleado');
-const _ = require('../models/empleado');
+const _ = require('underscore');
 
 
 
@@ -23,7 +23,7 @@ app.get('/empleado', function(req, res) {
 
         res.json({
             ok: true,
-            msg: 'Lista de usuarios obtenida con exito',
+            msg: 'Lista de empleados obtenida con exito',
             conteo: empleado.length,
             empleado
     
@@ -62,7 +62,7 @@ app.post('/empleado', function(req, res) {
 
 app.put('/empleado/:id', function(req, res) {
     let id = req.params.id;
-    let body = _.pick(req.body, ['nombre']);
+    let body = _.pick(req.body, [ 'idusuario', 'iddepartamento', 'nombredelpuesto', 'aniosservicio', 'horaentrada', 'horasalida' ]);
 
     Empleado.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' },
         (err, empDB) => {
@@ -76,7 +76,7 @@ app.put('/empleado/:id', function(req, res) {
 
             res.json({
                 ok: true,
-                msg: 'Usuario actualizado con exito',
+                msg: 'Empleado actualizado con exito',
                 empleado: empDB
             });
         });
@@ -90,14 +90,14 @@ app.delete('/empleado/:id', function(req, res) {
         if (err) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Ocurrio un error al momento de eliminar Usuario',
+                msg: 'Ocurrio un error al momento de eliminar Empleado',
                 err
             });
         }
 
         res.json({
             ok: true,
-            msg: 'Usuario eliminado con exito',
+            msg: 'Empleado eliminado con exito',
             empDB
         });
     });
