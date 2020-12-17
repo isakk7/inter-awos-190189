@@ -12,6 +12,8 @@ app.get('/empleado', function(req, res) {
     Empleado.find({})
     .skip(Number(desde))
     .limit(Number(hasta))
+    .populate('idusuario' ,'nombre primerapellido segundoapellido edad email telefono')
+    .populate('iddepartamento' ,'nombre numeroempleados aniosservicio idusuario telefono')
     .exec((err, empleado) => {
         if (err) {
             return res.status(400).json({

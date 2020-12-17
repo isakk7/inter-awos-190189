@@ -19,7 +19,7 @@ app.use(require('./routes/empleado'));
 app.use(require('./routes/departamento'));
 
 
-mongoose.connect('mongodb://localhost:27017/empresa', {
+mongoose.connect('mongodb://localhost:27017/proyecto', {
     
     useNewUrlParser: true,
     useCreateIndex: true,

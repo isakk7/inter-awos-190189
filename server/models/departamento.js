@@ -4,8 +4,9 @@ let Schema = mongoose.Schema;
 
 let departamentoSchema = new Schema({
     idjefedearea: {
-        type: String,
-        required: [true, 'El id es necesario']
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: [true, 'El id de departamento es necesario']
     },
     nombre: {
         type: String,
@@ -16,24 +17,20 @@ let departamentoSchema = new Schema({
         required: [true, 'El numero de empleados es necesario']
     },
     extensiontelefonica: {
-        type: Number,
-        ref: 'Telefono'
+        type: Number
+     
     },
    
     activo: {
         type: Boolean,
         default: true
     },
+    
     estado: {
         type:Boolean,
         default: true
-    },
-    usuario: {
-        type:Schema.Types.ObjectId,
-        ref: 'Usuario',
-        required: [true, 'El usuario es obligatorio']
-
     }
+   
  
 });
 

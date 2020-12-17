@@ -3,28 +3,30 @@ let Schema = mongoose.Schema;
 
 let empleadoSchema = new Schema({
     idusuario: {
-       type: String,
-       ref: 'Usuario'
+        type: Schema.Types.ObjectId,
+        required: [true, 'El id es necesario'],
+        ref: 'Usuario'
     },
     iddepartamento: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        required: [true, 'El id de departamento es necesario'],
         ref: 'Departamento'
     },
     nombredelpuesto: {
-        type: String,
-        ref: 'Puesto'
+        type: String
+        
     },
     aniosservicio: {
-        type: Number,
-        ref: 'Anios Servicio'
+        type: Number
+        
     },
     horaentrada: {
-        type: Number,
-        ref: 'Hora entrada'
+        type: Number
+        
     },
     horasalida: {
-        type: Number,
-        ref: 'Hora salida'
+        type: Number
+        
         
     },
     

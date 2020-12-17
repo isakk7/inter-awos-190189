@@ -12,7 +12,7 @@ app.get('/departamento', function(req, res) {
     Departamento.find({})
     .skip(Number(desde))
     .limit(Number(hasta))
-    .populate('usuario', 'nombre primerapellido segundoapellido edad curp telefono email ')
+    .populate('idjefedearea', 'nombre primerapellido segundoapellido curp telefono ')
     .exec((err, departamento) => {
         if (err) {
             return res.status(400).json({
